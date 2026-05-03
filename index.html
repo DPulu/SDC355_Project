@@ -90,7 +90,7 @@
       margin-top: 10px;
     }
 
-        .dark-mode-toggle {
+    .dark-mode-toggle {
       text-align: center;
       margin: 15px 0;
     }
@@ -141,11 +141,11 @@
   </style>
 </head>
 <body>
-    <div class="dark-mode-toggle">
+  <div class="dark-mode-toggle">
     <label for="darkMode">Dark Mode</label>
     <input type="checkbox" id="darkMode">
   </div>
-  
+
   <header>
     <h1>My Portfolio</h1>
     <p id="welcomeMessage">Welcome to my portfolio</p>
@@ -162,47 +162,45 @@
       <h2>About</h2>
       <p>Hello, my name is Duspul5115. I am a student working on building my skills in web development and technology.
         This page is a simple portfolio that introduces me and shows some of the work I have completed.</p>
-            <h3>Skills</h3>
+
+      <h3>Skills</h3>
       <ul id="skillsList"></ul>
     </section>
 
     <section id="featured">
-  <h2>Featured Content</h2>
+      <h2>Featured Content</h2>
 
-  <div id="universityResources" class="featured-box">
-    <h3>University Resources</h3>
-    <p>
-      <a href="https://www.ecpi.edu/" target="_blank">
-        ECPI Program Home Page
-      </a>
-    </p>
-  </div>
+      <div id="universityResources" class="featured-box">
+        <h3>University Resources</h3>
+        <p>
+          <a href="https://www.ecpi.edu/" target="_blank">
+            ECPI Program Home Page
+          </a>
+        </p>
+      </div>
 
-  <div id="personalProjects" class="featured-box">
-    <h3>Personal Projects</h3>
+      <div id="personalProjects" class="featured-box">
+        <h3>Personal Projects</h3>
 
-    <a href="https://dpulu.github.io" target="_blank">
-      <img src="Project1.png" alt="Portfolio Site Screenshot" width="250">
-    </a>
+        <a href="https://dpulu.github.io" target="_blank">
+          <img src="Project1.png" alt="Portfolio Site Screenshot" width="250">
+        </a>
 
-    <a href="https://github.com/" target="_blank">
-      <img src="https://via.placeholder.com/250x150?text=Project+2" alt="Project 2">
-    </a>
+        <a href="https://github.com/" target="_blank">
+          <img src="https://via.placeholder.com/250x150?text=Project+2" alt="Project 2">
+        </a>
 
-    <a href="https://github.com/" target="_blank">
-      <img src="https://via.placeholder.com/250x150?text=Project+3" alt="Project 3">
-    </a>
+        <a href="https://github.com/" target="_blank">
+          <img src="https://via.placeholder.com/250x150?text=Project+3" alt="Project 3">
+        </a>
+      </div>
+    </section>
 
-  </div>
-</section>
-
-        <section id="projects">
+    <section id="projects">
       <h2>Projects</h2>
       <p>This section highlights my projects.</p>
 
       <div class="projects-container">
-
-        <!-- Project 1 -->
         <div class="project project-item">
           <a href="https://dpulu.github.io" target="_blank">
             <img src="Project1.png" alt="Portfolio Site Screenshot" width="250">
@@ -210,7 +208,6 @@
           <p>Portfolio Site</p>
         </div>
 
-        <!-- Project 2 -->
         <div class="project project-item">
           <a href="https://github.com/YOURUSERNAME/YOURREPO" target="_blank">
             <img src="https://via.placeholder.com/250x150?text=Project+2" alt="Project 2">
@@ -218,14 +215,12 @@
           <p>Project 2</p>
         </div>
 
-        <!-- Project 3 -->
         <div class="project project-item">
           <a href="https://github.com/YOURUSERNAME/YOURREPO" target="_blank">
             <img src="https://via.placeholder.com/250x150?text=Project+3" alt="Project 3">
           </a>
           <p>Project 3</p>
         </div>
-
       </div>
     </section>
 
@@ -243,7 +238,7 @@
     </section>
   </main>
 
-    <script>
+  <script>
     // Ask the user for their name
     let userName = prompt("Please enter your name:");
 
@@ -263,6 +258,26 @@
       skillsList.appendChild(li);
     });
 
+    // Dynamically add a new paragraph to the About section
+    const aboutSection = document.getElementById("about");
+
+    const newPara = document.createElement("p");
+    newPara.textContent = "Recently, I completed a portfolio website project showcasing my HTML, CSS, and JavaScript skills.";
+
+    aboutSection.appendChild(newPara);
+
+    // Add delayed notification at the top of the page
+    setTimeout(function() {
+      const notification = document.createElement("div");
+      notification.textContent = "Welcome! Check out my latest updates below.";
+      notification.style.backgroundColor = "#6a0dad";
+      notification.style.color = "white";
+      notification.style.padding = "10px";
+      notification.style.textAlign = "center";
+
+      document.body.prepend(notification);
+    }, 2000);
+
     // Conditional logic for Featured Content
     const projectItems = document.querySelectorAll(".project-item");
     const universityResources = document.getElementById("universityResources");
@@ -276,6 +291,14 @@
       personalProjects.style.display = "block";
     }
 
+    // Modify existing elements using selectors
+    const aboutHeading = document.querySelector("#about h2");
+    aboutHeading.style.color = "#6a0dad";
+
+    const projectSection = document.getElementById("projects");
+    projectSection.style.border = "2px solid #6a0dad";
+    projectSection.style.padding = "10px";
+
     // Dark mode toggle
     const darkModeToggle = document.getElementById("darkMode");
 
@@ -283,13 +306,28 @@
       document.body.classList.toggle("dark-mode");
     });
 
-    // Contact form submit interaction
+    // Contact form submit interaction with timed confirmation
     const contactForm = document.getElementById("contactForm");
-    const senderName = document.getElementById("senderName");
 
     contactForm.addEventListener("submit", function(event) {
       event.preventDefault();
-      alert("Thank you, " + senderName.value + ", your message has been sent!");
+
+      const oldStatus = document.getElementById("formStatus");
+      if (oldStatus) {
+        oldStatus.remove();
+      }
+
+      const statusMsg = document.createElement("p");
+      statusMsg.id = "formStatus";
+      statusMsg.textContent = "Sending message...";
+      statusMsg.style.color = "blue";
+
+      contactForm.appendChild(statusMsg);
+
+      setTimeout(function() {
+        statusMsg.textContent = "Message sent successfully!";
+        statusMsg.style.color = "green";
+      }, 2500);
     });
   </script>
 </body>
