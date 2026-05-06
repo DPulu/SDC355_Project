@@ -4,143 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Portfolio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-
-    header {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    nav {
-      background-color: #444;
-      padding: 10px;
-      text-align: center;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: white;
-    }
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    .projects-container {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .project {
-      width: 250px;
-      text-align: center;
-    }
-
-    .project img {
-      width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    form input,
-    form textarea {
-      margin-bottom: 10px;
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    form button {
-      width: 150px;
-      padding: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #welcomeMessage {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .dark-mode-toggle {
-      text-align: center;
-      margin: 15px 0;
-    }
-
-    #featured {
-      margin-bottom: 40px;
-    }
-
-    .featured-box {
-      border: 2px solid #6a0dad;
-      padding: 15px;
-      margin-bottom: 20px;
-      background-color: #f8f8f8;
-    }
-
-    .featured-box img {
-      margin: 10px;
-      border: 1px solid #ccc;
-    }
-
-    body.dark-mode {
-      background-color: #121212;
-      color: white;
-    }
-
-    body.dark-mode main,
-    body.dark-mode section {
-      background-color: #1e1e1e;
-      color: white;
-    }
-
-    body.dark-mode a {
-      color: #ccccff;
-    }
-
-    body.dark-mode .featured-box {
-      background-color: #2a2a2a;
-      border-color: #bb86fc;
-    }
-
-    body.dark-mode input,
-    body.dark-mode textarea,
-    body.dark-mode button {
-      background-color: #333;
-      color: white;
-      border: 1px solid #777;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+  <!-- Welcome Modal -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <h2>Welcome</h2>
+      <p>This page is a work in progress.</p>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
   <div class="dark-mode-toggle">
     <label for="darkMode">Dark Mode</label>
     <input type="checkbox" id="darkMode">
@@ -160,8 +36,10 @@
   <main>
     <section id="about">
       <h2>About</h2>
-      <p>Hello, my name is Duspul5115. I am a student working on building my skills in web development and technology.
-        This page is a simple portfolio that introduces me and shows some of the work I have completed.</p>
+      <p>
+        Hello, my name is Duspul5115. I am a student working on building my skills in web development and technology.
+        This page is a simple portfolio that introduces me and shows some of the work I have completed.
+      </p>
 
       <h3>Skills</h3>
       <ul id="skillsList"></ul>
@@ -173,9 +51,7 @@
       <div id="universityResources" class="featured-box">
         <h3>University Resources</h3>
         <p>
-          <a href="https://www.ecpi.edu/" target="_blank">
-            ECPI Program Home Page
-          </a>
+          <a href="https://www.ecpi.edu/" target="_blank">ECPI Program Home Page</a>
         </p>
       </div>
 
@@ -233,21 +109,16 @@
         <input type="email" id="emailAddress" name="emailAddress" placeholder="Your Email Address" required>
         <input type="text" id="subject" name="subject" placeholder="Subject" required>
         <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        <button type="submit" id="submitBtn">Submit</button>
+
+        <div class="tooltip">
+          <button type="submit" id="submitBtn">Submit</button>
+          <span class="tooltiptext">Click to send your message!</span>
+        </div>
       </form>
     </section>
   </main>
 
   <script>
-    // Ask the user for their name
-    let userName = prompt("Please enter your name:");
-
-    // Update the welcome message if a name was entered
-    if (userName && userName.trim() !== "") {
-      document.getElementById("welcomeMessage").textContent =
-        "Welcome, " + userName + "!";
-    }
-
     // Skills array and loop
     const skills = ["HTML", "CSS", "JavaScript", "Git", "GitHub"];
     const skillsList = document.getElementById("skillsList");
@@ -258,27 +129,26 @@
       skillsList.appendChild(li);
     });
 
-    // Dynamically add a new paragraph to the About section
+    // Dynamically add a paragraph
     const aboutSection = document.getElementById("about");
-
     const newPara = document.createElement("p");
-    newPara.textContent = "Recently, I completed a portfolio website project showcasing my HTML, CSS, and JavaScript skills.";
+
+    newPara.textContent =
+      "Recently, I completed a portfolio website project showcasing my HTML, CSS, and JavaScript skills.";
 
     aboutSection.appendChild(newPara);
 
-    // Add delayed notification at the top of the page
+    // Delayed notification
     setTimeout(function() {
       const notification = document.createElement("div");
+
       notification.textContent = "Welcome! Check out my latest updates below.";
-      notification.style.backgroundColor = "#6a0dad";
-      notification.style.color = "white";
-      notification.style.padding = "10px";
-      notification.style.textAlign = "center";
+      notification.classList.add("notification");
 
       document.body.prepend(notification);
     }, 2000);
 
-    // Conditional logic for Featured Content
+    // Featured Content Logic
     const projectItems = document.querySelectorAll(".project-item");
     const universityResources = document.getElementById("universityResources");
     const personalProjects = document.getElementById("personalProjects");
@@ -291,7 +161,7 @@
       personalProjects.style.display = "block";
     }
 
-    // Modify existing elements using selectors
+    // Modify existing elements
     const aboutHeading = document.querySelector("#about h2");
     aboutHeading.style.color = "#6a0dad";
 
@@ -299,25 +169,38 @@
     projectSection.style.border = "2px solid #6a0dad";
     projectSection.style.padding = "10px";
 
-    // Dark mode toggle
+    // Dark Mode Persistence
     const darkModeToggle = document.getElementById("darkMode");
 
+    if (localStorage.getItem("darkMode") === "enabled") {
+      document.body.classList.add("dark-mode");
+      darkModeToggle.checked = true;
+    }
+
     darkModeToggle.addEventListener("change", function() {
-      document.body.classList.toggle("dark-mode");
+      if (darkModeToggle.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "disabled");
+      }
     });
 
-    // Contact form submit interaction with timed confirmation
+    // Timed form submission
     const contactForm = document.getElementById("contactForm");
 
     contactForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
       const oldStatus = document.getElementById("formStatus");
+
       if (oldStatus) {
         oldStatus.remove();
       }
 
       const statusMsg = document.createElement("p");
+
       statusMsg.id = "formStatus";
       statusMsg.textContent = "Sending message...";
       statusMsg.style.color = "blue";
@@ -328,6 +211,14 @@
         statusMsg.textContent = "Message sent successfully!";
         statusMsg.style.color = "green";
       }, 2500);
+    });
+
+    // Welcome Modal
+    const modal = document.getElementById("welcomeModal");
+    const closeModal = document.getElementById("closeModal");
+
+    closeModal.addEventListener("click", function() {
+      modal.style.display = "none";
     });
   </script>
 </body>
