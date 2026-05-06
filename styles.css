@@ -210,3 +210,20 @@ body.dark-mode .modal-content button {
   color: white;
   border: 1px solid #aaa;
 }
+
+/* Fix modal text visibility in dark mode */
+body.dark-mode #welcomeModal .modal-content {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+
+body.dark-mode #welcomeModal .modal-content h2,
+body.dark-mode #welcomeModal .modal-content p {
+  color: white !important;
+}
+
+body.dark-mode #welcomeModal .modal-content button {
+  background-color: #333 !important;
+  color: white !important;
+  border: 1px solid #aaa !important;
+}
