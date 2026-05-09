@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <!-- Welcome Modal  -->
+  <!-- Welcome Modal -->
   <div id="welcomeModal" class="modal">
     <div class="modal-content">
       <h2>Welcome</h2>
@@ -76,28 +76,7 @@
       <h2>Projects</h2>
       <p>This section highlights my projects.</p>
 
-      <div class="projects-container">
-        <div class="project project-item">
-          <a href="https://dpulu.github.io" target="_blank">
-            <img src="Project1.png" alt="Portfolio Site Screenshot" width="250">
-          </a>
-          <p>Portfolio Site</p>
-        </div>
-
-        <div class="project project-item">
-          <a href="https://github.com/YOURUSERNAME/YOURREPO" target="_blank">
-            <img src="https://via.placeholder.com/250x150?text=Project+2" alt="Project 2">
-          </a>
-          <p>Project 2</p>
-        </div>
-
-        <div class="project project-item">
-          <a href="https://github.com/YOURUSERNAME/YOURREPO" target="_blank">
-            <img src="https://via.placeholder.com/250x150?text=Project+3" alt="Project 3">
-          </a>
-          <p>Project 3</p>
-        </div>
-      </div>
+      <div id="dynamicProjects" class="projects-container"></div>
     </section>
 
     <section id="contact">
@@ -147,6 +126,56 @@
 
       document.body.prepend(notification);
     }, 2000);
+
+    // Project objects stored in an array
+    const defaultProjects = [
+      {
+        title: "Portfolio Site",
+        summary: "A personal portfolio webpage created with HTML, CSS, and JavaScript.",
+        image: "Project1.png",
+        link: "https://dpulu.github.io"
+      },
+      {
+        title: "Project 2",
+        summary: "A placeholder project that can be replaced with a future GitHub repository.",
+        image: "https://via.placeholder.com/250x150?text=Project+2",
+        link: "https://github.com/"
+      },
+      {
+        title: "Project 3",
+        summary: "A placeholder project used to demonstrate dynamic project rendering.",
+        image: "https://via.placeholder.com/250x150?text=Project+3",
+        link: "https://github.com/"
+      }
+    ];
+
+    // Store and retrieve project data with sessionStorage
+    let projects;
+
+    if (sessionStorage.getItem("projects")) {
+      projects = JSON.parse(sessionStorage.getItem("projects"));
+    } else {
+      sessionStorage.setItem("projects", JSON.stringify(defaultProjects));
+      projects = defaultProjects;
+    }
+
+    // Dynamically render projects
+    const dynamicProjects = document.getElementById("dynamicProjects");
+
+    projects.forEach(function(project) {
+      const projectDiv = document.createElement("div");
+      projectDiv.className = "project project-item";
+
+      projectDiv.innerHTML = `
+        <a href="${project.link}" target="_blank">
+          <img src="${project.image}" alt="${project.title}" width="250">
+        </a>
+        <h3>${project.title}</h3>
+        <p>${project.summary}</p>
+      `;
+
+      dynamicProjects.appendChild(projectDiv);
+    });
 
     // Featured Content Logic
     const projectItems = document.querySelectorAll(".project-item");
